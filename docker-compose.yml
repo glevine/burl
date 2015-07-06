@@ -1,0 +1,6 @@
+server:
+  build: .
+  ports:
+    - "6060:8080"
+  volumes:
+    - .:/go/src/github.com/glevine/burl

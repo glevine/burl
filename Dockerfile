@@ -26,6 +26,7 @@ ADD . /go/src/github.com/glevine/burl
 
 RUN go get github.com/codegangsta/negroni
 RUN go get github.com/gorilla/mux
+RUN go get github.com/unrolled/render
 RUN go install github.com/glevine/burl
 
 ENTRYPOINT /go/bin/burl

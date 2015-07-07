@@ -3,9 +3,13 @@ package main
 import (
     "github.com/codegangsta/negroni"
     "github.com/gorilla/mux"
+    "github.com/unrolled/render"
     "net/http"
-    "fmt"
 )
+
+var printer = render.New(render.Options {
+    IndentJSON: true,
+})
 
 func main() {
     router := mux.NewRouter().StrictSlash(true)
@@ -14,15 +18,20 @@ func main() {
     resources := router.PathPrefix("/urls").Subrouter()
     resources.Methods("GET").Path("/").HandlerFunc(ResourcesIndexHandler).Name("resources_index")
 
-    n := negroni.Classic()
-    n.UseHandler(router)
-    n.Run(":8080")
+    app := negroni.Classic()
+    app.UseHandler(router)
+    app.Run(":8080")
 }
 
 func HomeHandler(w http.ResponseWriter, req *http.Request) {
-    fmt.Fprintf(w, "Welcome to the home page!")
+    printer.JSON(w, http.StatusOK, map[string]string {"home": "Welcome to the home page!"})
 }
 
 func ResourcesIndexHandler(w http.ResponseWriter, req *http.Request) {
-    fmt.Fprintf(w, "Get me some urls!")
+    urls := []string {
+        "www.google.com",
+        "www.yahoo.com",
+        "www.cnn.com",
+    }
+    printer.JSON(w, http.StatusOK, map[string][]string {"urls": urls})
 }

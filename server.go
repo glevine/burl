@@ -8,6 +8,7 @@ import (
 )
 
 var printer = render.New(render.Options {
+    Layout: "layout",
     IndentJSON: true,
 })
 
@@ -24,7 +25,10 @@ func main() {
 }
 
 func HomeHandler(w http.ResponseWriter, req *http.Request) {
-    printer.JSON(w, http.StatusOK, map[string]string {"home": "Welcome to the home page!"})
+    data := map[string]interface{} {
+        "title": "Home",
+    }
+    printer.HTML(w, http.StatusOK, "home", data)
 }
 
 func ResourcesIndexHandler(w http.ResponseWriter, req *http.Request) {

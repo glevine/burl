@@ -19,7 +19,6 @@ ENV PATH /usr/src/go/bin:$PATH
 RUN mkdir -p /go/src /go/bin && chmod -R 777 /go
 ENV GOPATH /go
 ENV PATH /go/bin:$PATH
-WORKDIR /go
 
 # Deploy the application.
 ADD . /go/src/github.com/glevine/burl
@@ -29,6 +28,7 @@ RUN go get github.com/gorilla/mux
 RUN go get gopkg.in/unrolled/render.v1
 RUN go install github.com/glevine/burl
 
+WORKDIR /go/src/github.com/glevine/burl
 ENTRYPOINT /go/bin/burl
 
 EXPOSE 8080

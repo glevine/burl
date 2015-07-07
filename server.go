@@ -3,7 +3,7 @@ package main
 import (
     "github.com/codegangsta/negroni"
     "github.com/gorilla/mux"
-    "github.com/unrolled/render"
+    "gopkg.in/unrolled/render.v1"
     "net/http"
 )
 

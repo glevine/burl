@@ -16,8 +16,8 @@ func main() {
     router := mux.NewRouter().StrictSlash(true)
     router.Path("/").HandlerFunc(HomeHandler).Name("home")
 
-    resources := router.PathPrefix("/urls").Subrouter()
-    resources.Methods("GET").Path("/").HandlerFunc(ResourcesIndexHandler).Name("resources_index")
+    urls := router.PathPrefix("/urls").Subrouter()
+    urls.Methods("GET").Path("/").HandlerFunc(UrlsIndexHandler).Name("urls_index")
 
     app := negroni.Classic()
     app.UseHandler(router)
@@ -31,7 +31,7 @@ func HomeHandler(w http.ResponseWriter, req *http.Request) {
     printer.HTML(w, http.StatusOK, "home", data)
 }
 
-func ResourcesIndexHandler(w http.ResponseWriter, req *http.Request) {
+func UrlsIndexHandler(w http.ResponseWriter, req *http.Request) {
     urls := []string {
         "www.google.com",
         "www.yahoo.com",

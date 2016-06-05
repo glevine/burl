@@ -4,3 +4,7 @@ server:
     - "6060:8080"
   volumes:
     - .:/go/src/github.com/glevine/burl
+  links:
+    - neo4j
+neo4j:
+  image: tpires/neo4j

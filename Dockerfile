@@ -20,12 +20,17 @@ RUN mkdir -p /go/src /go/bin && chmod -R 777 /go
 ENV GOPATH /go
 ENV PATH /go/bin:$PATH
 
-# Deploy the application.
-ADD . /go/src/github.com/glevine/burl
-
+# Get the dependencies.
 RUN go get github.com/codegangsta/negroni
 RUN go get github.com/gorilla/mux
 RUN go get gopkg.in/unrolled/render.v1
+RUN go get github.com/jmcvetta/neoism
+
+# Mimic Heroku GrapheneDB add-on for accessing the database.
+ENV GRAPHENEDB_URL http://neo4j:neo4j@$NEO4J_PORT/db/data
+
+# Deploy the application.
+ADD . /go/src/github.com/glevine/burl
 RUN go install github.com/glevine/burl
 
 WORKDIR /go/src/github.com/glevine/burl
